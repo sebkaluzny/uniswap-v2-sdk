@@ -9,9 +9,10 @@ import {
   sortedInsert,
   wrappedCurrency,
   TradeType,
-  wrappedCurrencyAmount
+  wrappedCurrencyAmount,
+  computePriceImpact,
+  Token
 } from '@uniswap/sdk-core'
-import { computePriceImpact, Token } from '../../../../sdk-core'
 import { ONE, ZERO } from '../constants'
 import invariant from 'tiny-invariant'
 
@@ -244,8 +245,8 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
     const chainId: ChainId | undefined = nextAmountIn.currency.isToken
       ? nextAmountIn.currency.chainId
       : currencyOut.isToken
-      ? (currencyOut as Token).chainId
-      : undefined
+        ? (currencyOut as Token).chainId
+        : undefined
 
     invariant(chainId !== undefined, 'CHAIN_ID')
 
@@ -345,8 +346,8 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
     const chainId: ChainId | undefined = nextAmountOut.currency.isToken
       ? nextAmountOut.currency.chainId
       : currencyIn.isToken
-      ? (currencyIn as Token).chainId
-      : undefined
+        ? (currencyIn as Token).chainId
+        : undefined
     invariant(chainId !== undefined, 'CHAIN_ID')
 
     const amountOut = wrappedCurrencyAmount(nextAmountOut, chainId)
